@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.puzzle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.puzzle {
+    display: grid;
+    grid-template-columns: repeat(8, 100px); /* 8 columns for 8 tiles */
+    grid-template-rows: repeat(8, 100px); /* 8 rows for 8 tiles */
+    gap: 2px;
+}
+
+.tile {
+    width: 100px;
+    height: 100px;
+    background-size: 800px 800px; /* Image size divided into 8x8 grid (800x800) */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.instructions {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}
