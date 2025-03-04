@@ -7,6 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const grid = document.getElementById("grid");
     const tileGrid = document.getElementById("tile-grid");
     const winnerText = document.getElementById("winner");
+
+    if (!grid || !tileGrid || !winnerText) {
+        console.error("Missing grid elements. Check your HTML.");
+        return;
+    }
+
     let tiles = [];
 
     let positions = [];
@@ -32,10 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
         tiles.push(tile);
     }
 
-    // Shuffle tiles before appending them to the tile grid
+    // Shuffle and append tiles to tile grid
     tiles.sort(() => Math.random() - 0.5);
     tiles.forEach(tile => tileGrid.appendChild(tile));
 
+    // Create drop zones in the puzzle grid
     for (let row = 0; row < gridSize; row++) {
         for (let col = 0; col < gridSize; col++) {
             let dropZone = document.createElement("div");
@@ -54,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     draggedTile.classList.add("blinking");
                     setTimeout(() => draggedTile.classList.remove("blinking"), 1000);
                     correctTiles++;
+
                     if (correctTiles === totalTiles) {
                         winnerText.style.display = "block";
                         winnerText.style.animation = "winner-blink 0.5s 5 alternate";
