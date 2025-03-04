@@ -1,4 +1,8 @@
 /* script.js */
+<script src="script.js" defer></script>
+console.log("Tiles generated:", tiles);
+console.log("Grid:", grid);
+
 const gridSize = 6;
 const tileSize = 70;
 let correctTiles = 0;
