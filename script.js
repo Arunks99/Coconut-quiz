@@ -7,6 +7,7 @@ const grid = document.getElementById("grid");
 const tileGrid = document.getElementById("tile-grid");
 const winnerText = document.getElementById("winner");
 let tiles = [];
+let draggedTile = null;
 
 // Generate shuffled positions
 let positions = [];
@@ -28,10 +29,50 @@ for (let i = 0; i < positions.length; i++) {
 
     tile.dataset.correctPosition = `${row}-${col}`;
     tile.draggable = true;
-    
-    // Add drag event
+
+    // Mouse drag events
     tile.addEventListener("dragstart", (e) => {
         e.dataTransfer.setData("text/plain", tile.dataset.correctPosition);
+        draggedTile = tile;
+    });
+
+    // Touch events for mobile
+    tile.addEventListener("touchstart", (e) => {
+        draggedTile = tile;
+        e.target.style.opacity = "0.6"; // Visual feedback
+    });
+
+    tile.addEventListener("touchmove", (e) => {
+        e.preventDefault();
+        let touch = e.touches[0];
+        tile.style.position = "absolute";
+        tile.style.left = touch.pageX - tileSize / 2 + "px";
+        tile.style.top = touch.pageY - tileSize / 2 + "px";
+    });
+
+    tile.addEventListener("touchend", (e) => {
+        tile.style.opacity = "1"; // Restore appearance
+        let touch = e.changedTouches[0];
+        let element = document.elementFromPoint(touch.clientX, touch.clientY);
+        
+        if (element && element.dataset.targetPosition) {
+            let dropZone = element;
+            let draggedPos = draggedTile.dataset.correctPosition;
+
+            if (draggedPos === dropZone.dataset.targetPosition) {
+                dropZone.appendChild(draggedTile);
+                draggedTile.style.position = "static";
+                draggedTile.classList.add("blinking");
+
+                setTimeout(() => draggedTile.classList.remove("blinking"), 1000);
+                
+                correctTiles++;
+                if (correctTiles === totalTiles) {
+                    winnerText.style.display = "block";
+                    winnerText.style.animation = "winner-blink 0.5s 5 alternate";
+                }
+            }
+        }
     });
 
     tiles.push(tile);
@@ -49,9 +90,9 @@ for (let row = 0; row < gridSize; row++) {
         dropZone.style.width = `${tileSize}px`;
         dropZone.style.height = `${tileSize}px`;
         dropZone.dataset.targetPosition = `${row}-${col}`;
+
+        // Mouse drop event
         dropZone.addEventListener("dragover", (e) => e.preventDefault());
-        
-        // Handle tile drop
         dropZone.addEventListener("drop", (e) => {
             let draggedPos = e.dataTransfer.getData("text/plain");
             let draggedTile = tiles.find(t => t.dataset.correctPosition === draggedPos);
@@ -61,7 +102,6 @@ for (let row = 0; row < gridSize; row++) {
                 draggedTile.style.position = "static";
                 draggedTile.classList.add("blinking");
 
-                // Remove blinking effect after 1 second
                 setTimeout(() => draggedTile.classList.remove("blinking"), 1000);
                 
                 correctTiles++;
