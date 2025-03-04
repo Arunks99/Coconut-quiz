@@ -13,9 +13,12 @@ h1 {
 }
 
 #puzzle-container {
-  display: flex;
-  gap: 20px;
+    display: flex;
+    flex-direction: column; /* Stack grids vertically */
+    align-items: center;
+    gap: 20px; /* Space between grids */
 }
+
 
 #tile-grid,
 #grid {
