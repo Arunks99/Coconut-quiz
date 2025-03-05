@@ -25,6 +25,8 @@ for (let i = 0; i < positions.length; i++) {
     tile.classList.add("tile");
 
     // Correctly position the background image for each tile
+    tile.style.width = `${tileSize}px`;
+    tile.style.height = `${tileSize}px`;
     tile.style.backgroundPosition = `-${col * tileSize}px -${row * tileSize}px`;
 
     tile.dataset.correctPosition = `${row}-${col}`;
@@ -39,6 +41,7 @@ for (let i = 0; i < positions.length; i++) {
     // Touch events for mobile
     tile.addEventListener("touchstart", (e) => {
         draggedTile = tile;
+        draggedTile.style.zIndex = "1000"; // Ensure tile appears on top
         e.target.style.opacity = "0.6"; // Visual feedback
     });
 
@@ -46,15 +49,20 @@ for (let i = 0; i < positions.length; i++) {
         e.preventDefault();
         let touch = e.touches[0];
         tile.style.position = "absolute";
-        tile.style.left = touch.pageX - tileSize / 2 + "px";
-        tile.style.top = touch.pageY - tileSize / 2 + "px";
+        tile.style.width = `${tileSize}px`; // Prevent size change
+        tile.style.height = `${tileSize}px`; // Prevent size change
+        tile.style.left = `${touch.pageX - tileSize / 2}px`;
+        tile.style.top = `${touch.pageY - tileSize / 2}px`;
     });
 
     tile.addEventListener("touchend", (e) => {
         tile.style.opacity = "1"; // Restore appearance
+        tile.style.position = "static"; // Reset positioning
+        tile.style.zIndex = "1";
+
         let touch = e.changedTouches[0];
         let element = document.elementFromPoint(touch.clientX, touch.clientY);
-        
+
         if (element && element.dataset.targetPosition) {
             let dropZone = element;
             let draggedPos = draggedTile.dataset.correctPosition;
