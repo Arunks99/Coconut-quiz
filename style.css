@@ -1,3 +1,4 @@
+/* General styles */
 body {
     display: flex;
     flex-direction: column;
@@ -6,45 +7,75 @@ body {
     height: 100vh;
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
-    overflow: hidden; /* Prevents scrolling */
+    overflow: hidden;
 }
 
+/* Puzzle container (stacking grids vertically) */
 #puzzle-container {
     display: flex;
-    flex-direction: column; /* Stack grids vertically */
+    flex-direction: column;
     align-items: center;
-    gap: 10px; /* Reduce space for smaller screens */
+    gap: 20px;
 }
 
+/* Ensuring both grids are the same size */
 #tile-grid, #grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr); /* Make tiles adapt dynamically */
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(6, 70px);
+    grid-template-rows: repeat(6, 70px);
     gap: 2px;
     background: #ddd;
     padding: 5px;
     border: 2px solid #333;
-    width: 90vw; /* Make it fit mobile screens */
-    height: 90vw;
-    max-width: 420px; /* Ensure it doesn’t stretch too large */
-    max-height: 420px;
+    width: 432px;  /* 6 tiles * 70px + gaps */
+    height: 432px;
 }
 
+/* Tile styles */
 .tile {
-    width: 100%; /* Make tiles responsive */
-    height: 100%;
+    width: 70px;
+    height: 70px;
     background-image: url('https://i.postimg.cc/W1KvcFyq/glitter-psd.jpg');
-    background-size: 420px 420px; /* Ensure the full image is the correct size */
-    background-repeat: no-repeat;
+    background-size: 420px 420px;
     cursor: grab;
+    position: relative;
+    touch-action: none; /* Prevent browser interference with touch events */
 }
 
-/* 🔽 Adjust for Small Screens */
-@media (max-width: 600px) {
+/* Blinking animation for correct tile placement */
+.blinking {
+    animation: blink 0.3s 3 alternate;
+}
+@keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+/* Winner message */
+#winner {
+    display: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: green;
+    margin-top: 20px;
+    animation: winner-blink 0.5s 5 alternate;
+}
+@keyframes winner-blink {
+    0% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+/* Mobile adjustments */
+@media (max-width: 450px) {
     #tile-grid, #grid {
-        width: 95vw;
-        height: 95vw;
-        max-width: 360px;
-        max-height: 360px;
+        width: 360px;
+        height: 360px;
+        grid-template-columns: repeat(6, 60px);
+        grid-template-rows: repeat(6, 60px);
+    }
+    .tile {
+        width: 60px;
+        height: 60px;
+        background-size: 360px 360px;
     }
 }
