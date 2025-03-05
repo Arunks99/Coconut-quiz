@@ -34,7 +34,7 @@ body {
 
 /* Space between tile grid and answer grid */
 #grid {
-    margin-top: 30px; /* Reduced space between the grids */
+    margin-top: 15px; /* Reduced space between the grids */
 }
 
 /* Tile styles */
