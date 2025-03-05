@@ -3,19 +3,20 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
-    overflow: hidden;
+    height: auto;
+    min-height: 150vh; /* Ensure page is longer for scrolling */
+    overflow-y: auto;
 }
 
-/* Puzzle container (grids are stacked vertically) */
+/* Puzzle container */
 #puzzle-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 30px; /* More space between grids */
+    margin-top: 20px;
 }
 
 /* Default tile and grid sizes (Desktop) */
@@ -27,8 +28,13 @@ body {
     background: #ddd;
     padding: 5px;
     border: 2px solid #333;
-    width: 432px;  /* 6 tiles * 70px + gaps */
+    width: 432px; /* 6 tiles * 70px + gaps */
     height: 432px;
+}
+
+/* Space between tile grid and answer grid */
+#grid {
+    margin-top: 50px; /* Moves answer grid further down */
 }
 
 /* Tile styles */
@@ -39,16 +45,7 @@ body {
     background-size: 420px 420px;
     cursor: grab;
     position: relative;
-    touch-action: none; /* Prevent browser interference */
-}
-
-/* Blinking animation for correct tile placement */
-.blinking {
-    animation: blink 0.3s 3 alternate;
-}
-@keyframes blink {
-    0% { opacity: 1; }
-    100% { opacity: 0.3; }
+    touch-action: none;
 }
 
 /* Winner message */
@@ -60,22 +57,27 @@ body {
     margin-top: 20px;
     animation: winner-blink 0.5s 5 alternate;
 }
-@keyframes winner-blink {
-    0% { opacity: 1; }
-    100% { opacity: 0.3; }
-}
 
-/* 📱 Mobile adjustments: Smaller tiles for better fit */
+/* Mobile adjustments */
 @media (max-width: 500px) {
+    body {
+        min-height: 180vh; /* More scrolling space */
+    }
+
     #tile-grid, #grid {
         width: 312px;  /* 6 tiles * 50px + gaps */
         height: 312px;
         grid-template-columns: repeat(6, 50px);
         grid-template-rows: repeat(6, 50px);
     }
+
     .tile {
         width: 50px;
         height: 50px;
         background-size: 300px 300px;
+    }
+
+    #grid {
+        margin-top: 80px; /* More spacing on mobile */
     }
 }
