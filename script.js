@@ -1,5 +1,5 @@
 const gridSize = 6;
-const tileSize = 70;
+const tileSize = window.innerWidth <= 500 ? 50 : 70; // Adaptive tile size
 let correctTiles = 0;
 const totalTiles = gridSize * gridSize;
 
