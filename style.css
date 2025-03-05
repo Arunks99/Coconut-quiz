@@ -15,7 +15,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px; /* More space between grids */
+    gap: 20px; /* Reduced space between grids */
     margin-top: 20px;
 }
 
@@ -34,7 +34,7 @@ body {
 
 /* Space between tile grid and answer grid */
 #grid {
-    margin-top: 50px; /* Moves answer grid further down */
+    margin-top: 30px; /* Reduced space between the grids */
 }
 
 /* Tile styles */
@@ -61,7 +61,7 @@ body {
 /* Mobile adjustments */
 @media (max-width: 500px) {
     body {
-        min-height: 180vh; /* More scrolling space */
+        min-height: 160vh; /* Enough scrolling space */
     }
 
     #tile-grid, #grid {
@@ -78,6 +78,6 @@ body {
     }
 
     #grid {
-        margin-top: 80px; /* More spacing on mobile */
+        margin-top: 40px; /* Reduced even more on mobile */
     }
 }
